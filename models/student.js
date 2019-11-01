@@ -9,7 +9,8 @@ module.exports = (sequelize, type) => {
 
     Student.associate = function (models) {
         Student.belongsToMany(models.teacher, { through: 'register' });
-        Student.belongsToMany(models.teacher, { as: 'StudentTeacherSuspension', through: 'suspension' });
+        Student.hasMany(models.suspension);
+        // Student.belongsToMany(models.teacher, { as: 'StudentTeacherSuspension', through: 'suspension' });
     }
 
     return Student;

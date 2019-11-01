@@ -48,7 +48,7 @@ async function getMentions(req, res) {
 }
 
 async function findSuspensions(req, res) {
-    let suspensions = await models.suspension.findAll({ where: { teacherEmail: req.body.teacher }, raw: true });
+    let suspensions = await models.suspension.findAll({ raw: true });
 
     // [{
     //     id: 1,

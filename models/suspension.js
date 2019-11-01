@@ -9,5 +9,9 @@ module.exports = (sequelize, type) => {
         freezeTableName: true,
     })
 
+    Suspension.associate = function (models) {
+        Suspension.belongsTo(models.student);
+    }
+
     return Suspension;
 }

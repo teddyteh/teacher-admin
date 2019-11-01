@@ -2,18 +2,17 @@ var models = require('../models')
 var printErrorResponse = require('../utils/error-response-printer')
 
 module.exports = async function suspend(req, res, next) {
-    if (!req.body.teacher || !req.body.student) {
+    if (!req.body.student) {
         return printErrorResponse(res, "Teacher or student is not given.");
     }
 
-    let teacher = await findTeacher(req, res);
     let student = await findStudent(req, res);
 
-    if (!teacher || !student) {
-        return printErrorResponse(res, "Teacher or student doesn't exist.");
+    if (!student) {
+        return printErrorResponse(res, "Student doesn't exist.");
     }
 
-    await suspendStudent(teacher, student);
+    await suspendStudent(req, res, student);
 
     return res.status(204).send();
 }
@@ -30,6 +29,6 @@ async function findStudent(req, res) {
     return student;
 }
 
-async function suspendStudent(teacher, student) {
-    return teacher.addTeacherStudentSuspension(student);
+async function suspendStudent(req, res, student) {
+    return models.suspension.create({ studentEmail: req.body.student });
 }
